@@ -1,0 +1,25 @@
+<div class="game" *ngIf="game.id">
+    <div *ngIf="game.players.length >= 2 && !game.finished && game.players.indexOf(username) == game.player" style="color: green">Your turn</div>
+    <div *ngIf="game.players.length >= 2 && !game.finished && game.players.indexOf(username) != game.player">{{game.players[game.player]}}'s turn {{game.player}}</div>
+    <div *ngIf="game.finished">Game won by {{game.players[game.player]}}</div>
+    <span>
+        game {{game.id}}
+        <span *ngIf="game.players.length < 2">Waiting for players …</span>
+    </span>
+    {{game.id}}
+    <table class="game">
+        <tr *ngFor="#row of [5,4,3,2,1,0]">
+            <td
+                *ngFor="#column of [0,1,2,3,4,5,6]"
+                (click)="play(row,column)"
+                style="width: 50px;height: 50px;border:1px solid #AAA;"
+                [class.played-circle]="game.matrix[row][column] === 0"
+                [class.played-cross]="game.matrix[row][column] === 1"
+                [class.activeable]="canIPlay(row,column)"
+                [class.me]="game.matrix[row][column] == position"
+                >
+                <i class="fa fa-remove" *ngIf="game.matrix[row][column] == 0"></i> {{game.matrix[row][column]}}
+            </td>
+        </tr>
+    </table>
+</div>
